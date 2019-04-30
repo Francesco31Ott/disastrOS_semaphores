@@ -147,7 +147,7 @@ void disastrOS_start(void (*f)(void*), void* f_args, char* logfile){
   Resource_init();
   Descriptor_init();
 
-	Semaphore_init();
+  Semaphore_init();
   SemDescriptor_init();
 
   init_pcb=0;
@@ -313,8 +313,8 @@ int disastrOS_semOpen(int id) {
     return disastrOS_syscall(DSOS_CALL_SEMOPEN, id);
 }
 
-int disastrOS_semClose(int id) {
-    return disastrOS_syscall(DSOS_CALL_SEMCLOSE, id);
+int disastrOS_semClose(int fd) {
+    return disastrOS_syscall(DSOS_CALL_SEMCLOSE, fd);
 }
 
 void disastrOS_printStatus(){

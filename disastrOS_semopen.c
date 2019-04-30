@@ -7,12 +7,13 @@
 #include "disastrOS_semdescriptor.h"
 
 void internal_semOpen(){
-  
+  // takes the id from running (that represents the PCB)
   int id = running->syscall_args[0];
 
   if(id < 0){
     // invalid id
     running->syscall_retvalue = DSOS_ESEMNEG; 
+    printf("Cannot create a semaphore with negative id!\n");
     return;
   }
 
@@ -24,6 +25,7 @@ void internal_semOpen(){
     
     if(!sem){ // checks if the semaphore is allocated
       running->syscall_retvalue = DSOS_ESEMALLOC;
+      printf("Cannot allocate semaphore with id: %d\n", id);
       return;
     }
 
@@ -44,14 +46,16 @@ void internal_semOpen(){
   // allocates the pointer to the sem_desc
   SemDescriptorPtr* sem_desc_ptr = SemDescriptorPtr_alloc(sem_desc);
 
-  List_insert(&running->sem_descriptors, running->sem_descriptors.last, (ListItem*) sem_desc);
+  List_insert(&running->sem_descriptors, running->sem_descriptors.last, (ListItem*)sem_desc);
 
   // adds the descriptor to the semaphore struct
   sem_desc->ptr = sem_desc_ptr;
 
-  List_insert(&sem->descriptors, sem->descriptors.last, (ListItem*) sem_desc_ptr);
+  List_insert(&sem->descriptors, sem->descriptors.last, (ListItem*)sem_desc_ptr);
 
   running->syscall_retvalue = sem_desc->fd;
+  
+  printf("New semaphore correctly allocated with fd: %d and id: %d\n", running->last_sem_fd - 1, id);
 
   return;
 }

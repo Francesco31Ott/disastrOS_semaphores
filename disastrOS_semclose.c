@@ -7,15 +7,16 @@
 #include "disastrOS_semdescriptor.h"
 
 void internal_semClose(){
-  // takes the id of the semaphore
-  int id = running->syscall_args[0];
+  // takes the fd of the semaphore
+  int fd = running->syscall_args[0];
   
-  // sem_desc from the id
-  SemDescriptor* sem_desc = SemDescriptorList_byFd(&running->sem_descriptors, id);
+  // sem_desc from the fd
+  SemDescriptor* sem_desc = SemDescriptorList_byFd(&running->sem_descriptors, fd);
 
   if(!sem_desc){
     // invalid sem_desc
     running->syscall_retvalue = DSOS_ESEMNOFD;
+    printf("Cannot close semaphore with fd: %d\n", fd);
     return;
   }
 
@@ -31,8 +32,8 @@ void internal_semClose(){
   assert(sem_desc_ptr);
 
   // freeing allocated memory
-  Descriptor_free(sem_desc);
-  DescriptorPtr_free(sem_desc_ptr);
+  SemDescriptor_free(sem_desc);
+  SemDescriptorPtr_free(sem_desc_ptr);
   
   // checks if i have no descriptors 
   if(sem->descriptors.size == 0){
@@ -42,6 +43,8 @@ void internal_semClose(){
   }
 
   running->syscall_retvalue = 0;
+  
+  printf("Semaphore with fd: %d has been deallocated!\n", fd);
   
   return;
 }

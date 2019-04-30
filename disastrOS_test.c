@@ -14,18 +14,19 @@ void sleeperFunction(void* args){
 }
 
 void childFunction(void* args){
-  printf("Hello, I am the child function %d\n",disastrOS_getpid());
-  printf("I will iterate a bit, before terminating\n");
-  int type=0;
-  int mode=0;
-  int fd=disastrOS_openResource(disastrOS_getpid(),type,mode);
-  printf("fd=%d\n", fd);
-  printf("PID: %d, terminating\n", disastrOS_getpid());
-
-  for (int i=0; i<(disastrOS_getpid()+1); ++i){
-    printf("PID: %d, iterate %d\n", disastrOS_getpid(), i);
-    disastrOS_sleep((20-disastrOS_getpid())*5);
-  }
+  
+  int sem1 = disastrOS_semOpen(1);
+  // different fd but the same id, future operations will be applicated on the same semaphore
+  int sem2 = disastrOS_semOpen(1);
+  int sem3 = disastrOS_semOpen(-1); // error, negative id
+  int sem4 = disastrOS_semOpen(2);
+  int sem5 = disastrOS_semOpen(disastrOS_getpid());
+  disastrOS_semClose(sem1);
+  disastrOS_semClose(sem2);
+  disastrOS_semClose(sem3);
+  disastrOS_semClose(sem4);
+  disastrOS_semClose(sem5);
+  
   disastrOS_exit(disastrOS_getpid()+1);
 }
 
@@ -58,7 +59,7 @@ void initFunction(void* args) {
 	   pid, retval, alive_children);
     --alive_children;
   }
-  printf("shutdown!");
+  printf("shutdown!\n");
   disastrOS_shutdown();
 }
 
