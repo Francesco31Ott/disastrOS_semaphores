@@ -317,6 +317,14 @@ int disastrOS_semClose(int fd) {
     return disastrOS_syscall(DSOS_CALL_SEMCLOSE, fd);
 }
 
+int disastrOS_semWait(int fd) {
+    return disastrOS_syscall(DSOS_CALL_SEMWAIT, fd);
+}
+
+int disastrOS_semPost(int fd) {
+    return disastrOS_syscall(DSOS_CALL_SEMPOST, fd);
+}
+
 void disastrOS_printStatus(){
   printf("****************** DisastrOS ******************\n");
   printf("Running: ");
