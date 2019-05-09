@@ -12,6 +12,7 @@ void internal_semWait(){
 
   // sem_desc from the fd
   SemDescriptor* sem_desc = SemDescriptorList_byFd(&running->sem_descriptors, fd);
+  
   if(!sem_desc){
     // invalid sem_desc
     running->syscall_retvalue = DSOS_ESEMNOFD;
