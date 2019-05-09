@@ -4,6 +4,27 @@
 
 #include "disastrOS.h"
 
+/*   PRODUCER-CONSUMER PARADIGM   */
+
+void producer(int sem_prod, int sem_cons){
+  
+  for(int i = 0; i < 5; i++){
+    disastrOS_semWait(sem_prod);
+    printf("Produced\n");
+    disastrOS_semPost(sem_cons);
+  }
+}
+
+void consumer(int sem_prod, int sem_cons){
+  
+  for(int i = 0; i < 5; i++){
+    disastrOS_semWait(sem_cons);
+    printf("Consumed\n");
+    disastrOS_semPost(sem_prod);
+}
+
+/* ------------------------------ */
+
 // we need this to handle the sleep state
 void sleeperFunction(void* args){
   printf("Hello, I am the sleeper, and I sleep %d\n",disastrOS_getpid());
