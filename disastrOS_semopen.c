@@ -9,6 +9,8 @@
 void internal_semOpen(){
   // takes the id from running (that represents the PCB)
   int id = running->syscall_args[0];
+  // takes the counter, passed to the function Semaphore_alloc
+  int count = running->syscall_args[1];
 
   if(id < 0){
     // invalid id
@@ -21,7 +23,7 @@ void internal_semOpen(){
 
   if(!sem){ // checks if the semaphore exists
     // the semaphore must be allocated
-    sem = Semaphore_alloc(id, 1);
+    sem = Semaphore_alloc(id, count);
     
     if(!sem){ // checks if the semaphore is allocated
       running->syscall_retvalue = DSOS_ESEMALLOC;

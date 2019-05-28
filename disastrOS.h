@@ -37,7 +37,7 @@ int disastrOS_closeResource(int fd) ;
 int disastrOS_destroyResource(int resource_id);
 
 // semaphores
-int disastrOS_semOpen(int id);
+int disastrOS_semOpen(int id, int count);
 int disastrOS_semClose(int fd);
 int disastrOS_semWait(int fd);
 int disastrOS_semPost(int fd);
