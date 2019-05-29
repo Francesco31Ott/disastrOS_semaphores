@@ -53,7 +53,7 @@ Semaphore* SemaphoreList_byId(SemaphoreList* l, int id) {
 void Semaphore_print(Semaphore* r) {
   printf("id: %d, count:%d, pids:", r->id, r->count);
   DescriptorPtrList_print(&r->descriptors);
-  printf("waiting: ");
+  printf("\n\twaiting: ");
   DescriptorPtrList_print(&r->waiting_descriptors);
 }
 
