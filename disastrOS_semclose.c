@@ -16,7 +16,7 @@ void internal_semClose(){
   if(!sem_desc){
     // invalid sem_desc
     running->syscall_retvalue = DSOS_ESEMNOFD;
-    printf("Cannot close semaphore with fd: %d\n", fd);
+    printf("[ERROR] Cannot close semaphore with fd: %d\n", fd);
     return;
   }
 
@@ -44,7 +44,7 @@ void internal_semClose(){
 
   running->syscall_retvalue = 0;
   
-  printf("Semaphore with fd: %d has been deallocated!\n", fd);
+  printf("[SEMAPHORE] Semaphore with fd: %d has been deallocated!\n", fd);
   
   return;
 }

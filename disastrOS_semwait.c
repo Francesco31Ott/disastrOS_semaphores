@@ -16,7 +16,7 @@ void internal_semWait(){
   if(!sem_desc){
     // invalid sem_desc
     running->syscall_retvalue = DSOS_ESEMNOFD;
-    printf("Cannot open semaphore with the given fd!\n");
+    printf("[ERROR] Cannot open semaphore with the given fd!\n");
     return;
   }
 

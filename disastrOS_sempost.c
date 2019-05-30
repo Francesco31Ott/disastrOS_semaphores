@@ -16,7 +16,7 @@ void internal_semPost(){
   if(!sem_desc){
     // invalid sem_desc
     running->syscall_retvalue = DSOS_ESEMNOFD;
-    printf("Cannot open semaphore with the given fd!\n");
+    printf("[ERROR] Cannot open semaphore with the given fd!\n");
     return;
   }
 
@@ -32,6 +32,7 @@ void internal_semPost(){
 
     // removes the first sem_desc from the list of waiting_descriptors
     SemDescriptorPtr* sem_desc_ptr = (SemDescriptorPtr*)List_detach(&sem->waiting_descriptors, (ListItem*)sem->waiting_descriptors.first);
+    // puts this in the desc_list
     List_insert(&sem->descriptors, sem->descriptors.last, (ListItem*)sem_desc_ptr);
     // removes the process from the waiting_list with its sem_desc_ptr
     List_detach(&waiting_list, (ListItem*)sem_desc_ptr->descriptor->pcb);

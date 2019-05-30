@@ -82,10 +82,10 @@ void childFunction(void* args){
   disastrOS_printStatus();
 
 
-  printf("[PROCESSO %d] Ending...\n", disastrOS_getpid());
+  printf("[PROCESS %d] Ending...\n", disastrOS_getpid());
   
   
-  printf("[PROCESSO %d] Closing semaphores\n", disastrOS_getpid());
+  printf("[PROCESS %d] Closing semaphores\n", disastrOS_getpid());
   disastrOS_semClose(filled_sem);
   disastrOS_semClose(empty_sem);
   disastrOS_semClose(read_sem);

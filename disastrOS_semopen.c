@@ -15,7 +15,7 @@ void internal_semOpen(){
   if(id < 0){
     // invalid id
     running->syscall_retvalue = DSOS_ESEMNEG; 
-    printf("Cannot create a semaphore with negative id!\n");
+    printf("[ERROR] Cannot create a semaphore with negative id!\n");
     return;
   }
 
@@ -27,7 +27,7 @@ void internal_semOpen(){
     
     if(!sem){ // checks if the semaphore is allocated
       running->syscall_retvalue = DSOS_ESEMALLOC;
-      printf("Cannot allocate semaphore with id: %d\n", id);
+      printf("[ERROR] Cannot allocate semaphore with id: %d\n", id);
       return;
     }
 
@@ -38,7 +38,8 @@ void internal_semOpen(){
 
   if (!sem_desc){
     // invalid sem_desc
-    running->syscall_retvalue = DSOS_ESEMNOFD;   
+    running->syscall_retvalue = DSOS_ESEMNOFD;
+    printf("[ERROR] Invalid descriptor of the semaphore with id: %d\n", id);   
     return;
   }
 
@@ -57,7 +58,7 @@ void internal_semOpen(){
 
   running->syscall_retvalue = sem_desc->fd;
   
-  printf("New semaphore correctly allocated with fd: %d and id: %d\n", running->last_sem_fd - 1, id);
+  printf("[SEMAPHORE] New semaphore correctly allocated with fd: %d and id: %d\n", running->last_sem_fd - 1, id);
 
   return;
 }
