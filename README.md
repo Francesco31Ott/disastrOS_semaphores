@@ -1,5 +1,7 @@
 # disastrOS_semaphores
 
+Semaphores implementation in DisastrOS, for the course of Operating Systems.
+
 ### IMPLEMENTED FUNCTIONS: ###
 
 - disastrOS_semOpen
@@ -9,7 +11,9 @@
 
 ### DISASTROS_SEMOPEN ###  
 
+```C  
 int disastrOS_semOpen(int id, int count)
+```
 
 ##### DESCRIPTION #####
 
@@ -27,7 +31,9 @@ On success, `disastrOS_semOpen()` returns a non-negative integer. On error, `dis
 
 ### DISASTROS_SEMCLOSE ###  
 
+```C
 int disastrOS_semClose(int fd)
+```
 
 ##### DESCRIPTION #####
 
@@ -42,7 +48,9 @@ On success, `disastrOS_semClose()` returns 0. On error, `disastrOS_semClose()` r
 
 ### DISASTROS_SEMWAIT ###  
 
+```C
 int disastrOS_semWait(int fd)
+```
 
 ##### DESCRIPTION #####
 
@@ -57,7 +65,9 @@ On success, `disastrOS_semWait()` returns 0. On error, `disastrOS_semWait()` ret
 
 ### DISASTROS_SEMPOST ###  
 
+```C
 int disastrOS_semPost(int fd)
+```
 
 ##### DESCRIPTION #####
 
@@ -69,3 +79,14 @@ This function increments the semaphore pointed to by fd.
 On success, `disastrOS_semPost()` returns 0. On error, `disastrOS_semPost()` returns an error code (negative value). 
 ##### ERRORS #####
 - DSOS_ESEMNOFD : invalid semDescriptor.
+
+## INSTRUCTIONS
+
+To compile just run  
+`make`  
+then  
+`./disastros_test`  
+to run the test.  
+  
+If you want to find memory leaks run  
+`valgrind ./disastros_test`
